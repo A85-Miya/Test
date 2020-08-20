@@ -1,0 +1,100 @@
+<web-app>
+
+	<servlet>
+		<servlet-name>GrandMenuServletMapping</servlet-name>
+		<servlet-class>servlet.GrandMenuServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GrandMenuServletMapping</servlet-name>
+		<url-pattern>/GrandMenu</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>TestServletMapping</servlet-name>
+		<servlet-class>servlet.TestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestServletMapping</servlet-name>
+		<url-pattern>/Test</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>FreeSearchServletMapping</servlet-name>
+		<servlet-class>servlet.FreeSearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FreeSearchServletMapping</servlet-name>
+		<url-pattern>/FreeSearch</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>WearSearchServletMapping</servlet-name>
+		<servlet-class>servlet.WearSearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearSearchServletMapping</servlet-name>
+		<url-pattern>/WearSearch</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>WearDetailServletMapping</servlet-name>
+		<servlet-class>servlet.WearDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearDetailServletMapping</servlet-name>
+		<url-pattern>/WearDetail</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
+	<servlet>
+		<servlet-name>InsertCartServletMapping</servlet-name>
+		<servlet-class>servlet.InsertCartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InsertCartServletMapping</servlet-name>
+		<url-pattern>/InsertCart</url-pattern>
+	</servlet-mapping>
+
+
+
+
+	<servlet>
+		<servlet-name>LoginCustomerServletMapping</servlet-name>
+		<servlet-class>servlet.LoginCustomerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginCustomerServletMapping</servlet-name>
+		<url-pattern>/LoginCustomer2</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LoginCustomer2ServletMapping</servlet-name>
+		<servlet-class>servlet.LoginCustomer2Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginCustomer2ServletMapping</servlet-name>
+		<url-pattern>/LoginCustomer</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>LoginStaffServletMapping</servlet-name>
+		<servlet-class>servlet.LoginStaffServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginStaffServletMapping</servlet-name>
+		<url-pattern>/LoginStaff</url-pattern>
+	</servlet-mapping>
+
+</web-app>
