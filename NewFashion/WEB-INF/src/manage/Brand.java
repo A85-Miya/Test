@@ -2,19 +2,19 @@ package manage;
 
 public class Brand {
 
-    private String brandid;
-    private String brandname;
+    private String id;
+    private String name;
 
-    public String getBrandid() {
-        return brandid;
+    public String getId() {
+        return id;
     }
-    public void setBrandid(String brandid) {
-        this.brandid = brandid;
+    public void setId(String id) {
+        this.id = id;
     }
-    public String getBrandname() {
-        return brandname;
+    public String getName() {
+        return name;
     }
-    public void setBrandname(String brandname) {
-        this.brandname = brandname;
+    public void setName(String name) {
+        this.name = name;
     }
 }

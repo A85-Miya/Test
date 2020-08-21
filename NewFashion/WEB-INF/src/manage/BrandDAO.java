@@ -136,24 +136,26 @@ public class BrandDAO {
 
             /*
              * 結果セットからデータを検索件数分全て取り出し、
-             * AllayListオブジェクトにBrandkオブジェクトとして格納
+             * AllayListオブジェクトにBrandオブジェクトとして格納
              */
             while (rs.next()) {
                 Brand brand = new Brand();
-                brand.setBrandid(rs.getString("brandid"));
-                brand.setBrandname(rs.getString("brandname"));
+                brand.setId(rs.getString("id"));
+                brand.setName(rs.getString("name"));
                 brandList.add(brand);
             }
         } catch (Exception e) {
-            throw new IllegalStateException(e);
-        } finally {
-            if ( smt != null ) {
-                try { smt.close(); } catch (SQLException ignore) { }
-            }
-            if ( con != null ) {
-                try { con.close(); } catch (SQLException ignore) { }
+            error = "DB接続エラーの為、処理は行えませんでした。";
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+            try {
+                smt.close();
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-    return brandList;
+        return brandList;
     }
 }
+

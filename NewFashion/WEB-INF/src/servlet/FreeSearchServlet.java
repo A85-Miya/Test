@@ -32,26 +32,26 @@ public class FreeSearchServlet extends HttpServlet {
         String error = "";
         String search = "";
 
+        //DAOクラスのオブジェクトを生成
+        BrandDAO objBrand = new BrandDAO();
+        CatedetailDAO objCate = new CatedetailDAO();
+        CategoryDAO objDao = new CategoryDAO();
+        CatemenuDAO objDaomenu = new CatemenuDAO();
+        ColorDAO objColor = new ColorDAO();
+        SizeDAO objSize = new SizeDAO();
+        WearDAO objWear = new WearDAO();
+
+        //selectAllでデータ取得
+        ArrayList<Brand> brandList = objBrand.selectAll();
+        ArrayList<Catedetail> catedetailList = objCate.selectAll();
+        ArrayList<Category> categoryList = objDao.selectAll();
+        ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
+        ArrayList<Color> colorList = objColor.selectAll();
+        ArrayList<Size> sizeList = objSize.selectAll();
+        ArrayList<Wear> wearList = objWear.search(search);
+
         try {
             search = request.getParameter("search");
-
-            //DAOクラスのオブジェクトを生成
-            BrandDAO objBrand = new BrandDAO();
-            CatedetailDAO objCate = new CatedetailDAO();
-            CategoryDAO objDao = new CategoryDAO();
-            CatemenuDAO objDaomenu = new CatemenuDAO();
-            ColorDAO objColor = new ColorDAO();
-            SizeDAO objSize = new SizeDAO();
-            WearDAO objWear = new WearDAO();
-
-            //selectAllでデータ取得
-            ArrayList<Brand> brandList = objBrand.selectAll();
-            ArrayList<Catedetail> catedetailList = objCate.selectAll();
-            ArrayList<Category> categoryList = objDao.selectAll();
-            ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
-            ArrayList<Color> colorList = objColor.selectAll();
-            ArrayList<Size> sizeList = objSize.selectAll();
-            ArrayList<Wear> wearList = objWear.search(search);
 
             //requestでデータ登録
             request.setAttribute("brand_list", brandList);
@@ -62,17 +62,10 @@ public class FreeSearchServlet extends HttpServlet {
             request.setAttribute("size_list", sizeList);
             request.setAttribute("wear_list", wearList);
 
-        } catch (IllegalStateException e) {
-            error = "DB接続エラーの為、処理は行えませんでした。";
-        } finally {
-            request.setAttribute("error", error);
-            if (error.equals("")) {
-                //freeanswer.jspへフォワード
-                request.getRequestDispatcher("/view/freeanswer.jsp").forward(request, response);
-            } else {
-                //error.jspへフォワード
-                request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-            }
+        } catch (Exception e) {
+            //freeanswer.jspへフォワード
+            request.getRequestDispatcher("/view/freeanswer.jsp").forward(request, response);
         }
     }
 }
+
