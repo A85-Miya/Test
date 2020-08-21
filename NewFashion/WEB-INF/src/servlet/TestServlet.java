@@ -26,61 +26,59 @@ import manage.WearDAO;
 
 public class TestServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest request ,HttpServletResponse response)
-			throws ServletException ,IOException{
+    public void doGet(HttpServletRequest request ,HttpServletResponse response)
+            throws ServletException ,IOException{
 
-		String error = "";
-		String cmd = "";
+        String error = "";
+        String cmd = "";
 
-		try {
-			cmd = request.getParameter("cmd");
-			WearDAO wearDao = new WearDAO();
-			ArrayList<Wear> wearList = wearDao.searchCate(cmd);
+        try {
+            cmd = request.getParameter("cmd");
+            WearDAO wearDao = new WearDAO();
+            ArrayList<Wear> wearList = wearDao.searchCate(cmd);
 
-			CategoryDAO cateDao = new CategoryDAO();
-			Category topname = cateDao.selectByCategoryid(cmd);
+            CategoryDAO cateDao = new CategoryDAO();
+            Category topname = cateDao.selectByCategoryid(cmd);
 
-			request.setAttribute("wear_list", wearList);
-			request.setAttribute("topname", topname);
+            request.setAttribute("wear_list", wearList);
+            request.setAttribute("topname", topname);
 
+            //DAOクラスのオブジェクトを生成
+            BrandDAO objBrand = new BrandDAO();
+            CatedetailDAO objCate = new CatedetailDAO();
+            CategoryDAO objDao = new CategoryDAO();
+            CatemenuDAO objDaomenu = new CatemenuDAO();
+            ColorDAO objColor = new ColorDAO();
+            SizeDAO objSize = new SizeDAO();
 
-			//DAOクラスのオブジェクトを生成
-			BrandDAO objBrand = new BrandDAO();
-			CatedetailDAO objCate = new CatedetailDAO();
-			CategoryDAO objDao = new CategoryDAO();
-			CatemenuDAO objDaomenu = new CatemenuDAO();
-			ColorDAO objColor = new ColorDAO();
-			SizeDAO objSize = new SizeDAO();
-			//selectAllで情報を取得
-			ArrayList<Brand> brandList = objBrand.selectAll();
-			ArrayList<Catedetail> catedetailList = objCate.selectAll();
-			ArrayList<Category> categoryList = objDao.selectAll();
-			ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
-			ArrayList<Color> colorList = objColor.selectAll();
-			ArrayList<Size> sizeList = objSize.selectAll();
-			//requestスコープに登録
-			request.setAttribute("brand_list", brandList);
-			request.setAttribute("catedetail_list", catedetailList);
-			request.setAttribute("category_list", categoryList);
-			request.setAttribute("catemenu_list", catemenuList);
-			request.setAttribute("color_list", colorList);
-			request.setAttribute("size_list", sizeList);
+            //selectAllで情報を取得
+            ArrayList<Brand> brandList = objBrand.selectAll();
+            ArrayList<Catedetail> catedetailList = objCate.selectAll();
+            ArrayList<Category> categoryList = objDao.selectAll();
+            ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
+            ArrayList<Color> colorList = objColor.selectAll();
+            ArrayList<Size> sizeList = objSize.selectAll();
 
-		} catch (IllegalStateException e) {
-			error = "DB接続エラーの為、処理は行えませんでした。";
+            //requestスコープに登録
+            request.setAttribute("brand_list", brandList);
+            request.setAttribute("catedetail_list", catedetailList);
+            request.setAttribute("category_list", categoryList);
+            request.setAttribute("catemenu_list", catemenuList);
+            request.setAttribute("color_list", colorList);
+            request.setAttribute("size_list", sizeList);
 
-		} finally {
-			request.setAttribute("error", error);
+        } catch (IllegalStateException e) {
+            error = "DB接続エラーの為、処理は行えませんでした。";
 
-			if (error.equals("")) {
-				//test.jspへフォワード
-				request.getRequestDispatcher("/view/test.jsp").forward(request, response);
-			} else {
-				//error.jspへフォワード
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-			}
-		}
-
-	}
-
+        } finally {
+            request.setAttribute("error", error);
+            if (error.equals("")) {
+                //test.jspへフォワード
+                request.getRequestDispatcher("/view/test.jsp").forward(request, response);
+            } else {
+                //error.jspへフォワード
+                request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+            }
+        }
+    }
 }

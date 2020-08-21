@@ -26,57 +26,53 @@ import manage.WearDAO;
 
 public class FreeSearchServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest request ,HttpServletResponse response)
-			throws ServletException ,IOException{
+    public void doGet(HttpServletRequest request ,HttpServletResponse response)
+            throws ServletException ,IOException{
 
-		String error = "";
-		String search = "";
+        String error = "";
+        String search = "";
 
-		try {
+        try {
+            search = request.getParameter("search");
 
-			search = request.getParameter("search");
+            //DAOクラスのオブジェクトを生成
+            BrandDAO objBrand = new BrandDAO();
+            CatedetailDAO objCate = new CatedetailDAO();
+            CategoryDAO objDao = new CategoryDAO();
+            CatemenuDAO objDaomenu = new CatemenuDAO();
+            ColorDAO objColor = new ColorDAO();
+            SizeDAO objSize = new SizeDAO();
+            WearDAO objWear = new WearDAO();
 
+            //selectAllでデータ取得
+            ArrayList<Brand> brandList = objBrand.selectAll();
+            ArrayList<Catedetail> catedetailList = objCate.selectAll();
+            ArrayList<Category> categoryList = objDao.selectAll();
+            ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
+            ArrayList<Color> colorList = objColor.selectAll();
+            ArrayList<Size> sizeList = objSize.selectAll();
+            ArrayList<Wear> wearList = objWear.search(search);
 
-			//DAOクラスのオブジェクトを生成
-			BrandDAO objBrand = new BrandDAO();
-			CatedetailDAO objCate = new CatedetailDAO();
-			CategoryDAO objDao = new CategoryDAO();
-			CatemenuDAO objDaomenu = new CatemenuDAO();
-			ColorDAO objColor = new ColorDAO();
-			SizeDAO objSize = new SizeDAO();
-			WearDAO objWear = new WearDAO();
-			//selectAllでデータ取得
-			ArrayList<Brand> brandList = objBrand.selectAll();
-			ArrayList<Catedetail> catedetailList = objCate.selectAll();
-			ArrayList<Category> categoryList = objDao.selectAll();
-			ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
-			ArrayList<Color> colorList = objColor.selectAll();
-			ArrayList<Size> sizeList = objSize.selectAll();
-			ArrayList<Wear> wearList = objWear.search(search);
-			//requestでデータ登録
-			request.setAttribute("brand_list", brandList);
-			request.setAttribute("catedetail_list", catedetailList);
-			request.setAttribute("category_list", categoryList);
-			request.setAttribute("catemenu_list", catemenuList);
-			request.setAttribute("color_list", colorList);
-			request.setAttribute("size_list", sizeList);
-			request.setAttribute("wear_list", wearList);
+            //requestでデータ登録
+            request.setAttribute("brand_list", brandList);
+            request.setAttribute("catedetail_list", catedetailList);
+            request.setAttribute("category_list", categoryList);
+            request.setAttribute("catemenu_list", catemenuList);
+            request.setAttribute("color_list", colorList);
+            request.setAttribute("size_list", sizeList);
+            request.setAttribute("wear_list", wearList);
 
-
-		} catch (IllegalStateException e) {
-			error = "DB接続エラーの為、処理は行えませんでした。";
-
-		} finally {
-			request.setAttribute("error", error);
-			if (error.equals("")) {
-				//freeanswer.jspへフォワード
-				request.getRequestDispatcher("/view/freeanswer.jsp").forward(request, response);
-			} else {
-				//error.jspへフォワード
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-			}
-		}
-
-	}
-
+        } catch (IllegalStateException e) {
+            error = "DB接続エラーの為、処理は行えませんでした。";
+        } finally {
+            request.setAttribute("error", error);
+            if (error.equals("")) {
+                //freeanswer.jspへフォワード
+                request.getRequestDispatcher("/view/freeanswer.jsp").forward(request, response);
+            } else {
+                //error.jspへフォワード
+                request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+            }
+        }
+    }
 }

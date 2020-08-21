@@ -24,49 +24,49 @@ import manage.SizeDAO;
 
 public class GrandMenuServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest request ,HttpServletResponse response)
-			throws ServletException ,IOException{
+    public void doGet(HttpServletRequest request ,HttpServletResponse response)
+            throws ServletException ,IOException{
 
-		String error = "";
+        String error = "";
 
-		try {
-			//DAOクラスのオブジェクトを生成
-			BrandDAO objBrand = new BrandDAO();
-			CatedetailDAO objCate = new CatedetailDAO();
-			CategoryDAO objDao = new CategoryDAO();
-			CatemenuDAO objDaomenu = new CatemenuDAO();
-			ColorDAO objColor = new ColorDAO();
-			SizeDAO objSize = new SizeDAO();
-			//selectAllでデータ取得
-			ArrayList<Brand> brandList = objBrand.selectAll();
-			ArrayList<Catedetail> catedetailList = objCate.selectAll();
-			ArrayList<Category> categoryList = objDao.selectAll();
-			ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
-			ArrayList<Color> colorList = objColor.selectAll();
-			ArrayList<Size> sizeList = objSize.selectAll();
-			//requestに登録
-			request.setAttribute("brand_list", brandList);
-			request.setAttribute("catedetail_list", catedetailList);
-			request.setAttribute("category_list", categoryList);
-			request.setAttribute("catemenu_list", catemenuList);
-			request.setAttribute("color_list", colorList);
-			request.setAttribute("size_list", sizeList);
+        try {
+            //DAOクラスのオブジェクトを生成
+            BrandDAO objBrand = new BrandDAO();
+            CatedetailDAO objCate = new CatedetailDAO();
+            CategoryDAO objDao = new CategoryDAO();
+            CatemenuDAO objDaomenu = new CatemenuDAO();
+            ColorDAO objColor = new ColorDAO();
+            SizeDAO objSize = new SizeDAO();
 
+            //selectAllでデータ取得
+            ArrayList<Brand> brandList = objBrand.selectAll();
+            ArrayList<Catedetail> catedetailList = objCate.selectAll();
+            ArrayList<Category> categoryList = objDao.selectAll();
+            ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
+            ArrayList<Color> colorList = objColor.selectAll();
+            ArrayList<Size> sizeList = objSize.selectAll();
 
-		} catch (IllegalStateException e) {
-			error = "DB接続エラーの為、処理は行えませんでした。";
+            //requestに登録
+            request.setAttribute("brand_list", brandList);
+            request.setAttribute("catedetail_list", catedetailList);
+            request.setAttribute("category_list", categoryList);
+            request.setAttribute("catemenu_list", catemenuList);
+            request.setAttribute("color_list", colorList);
+            request.setAttribute("size_list", sizeList);
 
-		} finally {
-			request.setAttribute("error", error);
-			if (error.equals("")) {
-				//grandmenu.jspへフォワード
-				request.getRequestDispatcher("/view/grandmenu2.jsp").forward(request, response);
-			} else {
-				//error.jspへフォワード
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-			}
-		}
+        } catch (IllegalStateException e) {
+            error = "DB接続エラーの為、処理は行えませんでした。";
+        } finally {
+            request.setAttribute("error", error);
+            if (error.equals("")) {
+                //grandmenu.jspへフォワード
+                request.getRequestDispatcher("/view/grandmenu2.jsp").forward(request, response);
+            } else {
+                //error.jspへフォワード
+                request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+            }
+        }
 
-	}
+    }
 
 }

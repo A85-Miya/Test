@@ -9,165 +9,154 @@ import java.util.ArrayList;
 
 public class ColorDAO {
 
-	private static String RDB_DRIVE ="com.mysql.cj.jdbc.Driver";
-	private static String URL ="jdbc:mysql://localhost:3306/fashiondb?serverTimezone=JST";
-	private static String USER ="item";
-	private static String PASS ="item123";
+    private static String RDB_DRIVE ="com.mysql.cj.jdbc.Driver";
+    private static String URL ="jdbc:mysql://localhost:3306/fashiondb?serverTimezone=JST";
+    private static String USER ="item";
+    private static String PASS ="item123";
 
-	private static Connection getConnection() {
-		Connection con = null;
+    private static Connection getConnection() {
 
-		try {
-			Class.forName(RDB_DRIVE);
-			con = DriverManager.getConnection(URL, USER, PASS);
-			return con;
+        Connection con = null;
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
-	}
+        try {
+            Class.forName(RDB_DRIVE);
+            con = DriverManager.getConnection(URL, USER, PASS);
+            return con;
 
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
+    public void insert(Color color) {
 
-	public void insert(Color color) {
+        Connection con = null;
+        Statement smt = null;
 
-		Connection con = null;
-		Statement smt = null;
+        try {
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
-		try {
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
+            //SQL文を文字列として定義
+            String sql = "INSERT INTO colorinfo(colorid,colorname) "
+                    + "VALUES('"+ color.getColorid() +"','"+ color.getColorname() +"')";
+            int count = smt.executeUpdate(sql);
 
-			//SQL文を文字列として定義
-			String sql = "INSERT INTO colorinfo(colorid,colorname) "
-					+ "VALUES('"+ color.getColorid() +"','"+ color.getColorname() +"')";
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    }
 
-			int count = smt.executeUpdate(sql);
+    public void update(Color color) {
 
+        Connection con = null;
+        Statement smt = null;
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	}
+        try {
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
+            //SQL文を文字列として定義
+            String sql = "UPDATE colorinfo SET colorname='"+ color.getColorname()
+                +"' WHERE colorid='"+ color.getColorid() +"'";
+            int count = smt.executeUpdate(sql);
 
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    }
 
-	public void update(Color color) {
+    public Color selectByColorid(String colorid){
 
-		Connection con = null;
-		Statement smt = null;
+        Connection con = null;
+        Statement smt = null;
 
-		try {
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
+        //Bookオブジェクトを生成
+        Color color = new Color();
 
-			//SQL文を文字列として定義
-			String sql = "UPDATE colorinfo SET colorname='"+ color.getColorname()
-				+"' WHERE colorid='"+ color.getColorid() +"'";
+        try {
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
-			int count = smt.executeUpdate(sql);
+            //SQL文を文字列として定義
+            String sql = "SELECT * FROM colorinfo WHERE colorid= '" + colorid + "'";
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	}
+            //executeQuery()メソッドを利用し、結果セットを取得
+            ResultSet rs = smt.executeQuery(sql);
 
+            //colorオブジェクトに格納
+            while (rs.next()) {
+                color.setColorid(rs.getString("colorid"));
+                color.setColorname(rs.getString("colorname"));
+            }
 
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+        return color;
+    }
 
-	public Color selectByColorid(String colorid){
+    public ArrayList<Color> selectAll() {
 
-		Connection con = null;
-		Statement smt = null;
+        Connection con = null;
+        Statement smt = null;
 
-		//Bookオブジェクトを生成
-		Color color = new Color();
+        ArrayList<Color> colorList = new ArrayList<Color>();
 
-		try {
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
+        String sql = "SELECT * FROM colorinfo";
 
-			//SQL文を文字列として定義
-			String sql = "SELECT * FROM colorinfo WHERE colorid= '" + colorid + "'";
+        try{
+            //Connectionオブジェクトを生成
+            con = getConnection();
+            //Statementオブジェクトを生成
+            smt = con.createStatement();
+            ResultSet rs = smt.executeQuery(sql);
 
-			//executeQuery()メソッドを利用し、結果セットを取得
-			ResultSet rs = smt.executeQuery(sql);
+            /*
+             * 結果セットからデータを検索件数分全て取り出し、
+             * AllayListオブジェクトにcolorオブジェクトとして格納
+             */
+            while (rs.next()) {
+                Color color = new Color();
+                color.setColorid(rs.getString("colorid"));
+                color.setColorname(rs.getString("colorname"));
+                colorList.add(color);
+            }
 
-			//colorオブジェクトに格納
-			while (rs.next()) {
-				color.setColorid(rs.getString("colorid"));
-				color.setColorname(rs.getString("colorname"));
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-		return color;
-	}
-
-
-
-	public ArrayList<Color> selectAll() {
-
-		Connection con = null;
-		Statement smt = null;
-
-		ArrayList<Color> colorList = new ArrayList<Color>();
-
-		String sql = "SELECT * FROM colorinfo";
-
-		try{
-			//Connectionオブジェクトを生成
-			con = getConnection();
-			//Statementオブジェクトを生成
-			smt = con.createStatement();
-			ResultSet rs = smt.executeQuery(sql);
-
-			/*
-			 * 結果セットからデータを検索件数分全て取り出し、
-			 * AllayListオブジェクトにcolorオブジェクトとして格納
-			 */
-			while (rs.next()) {
-				Color color = new Color();
-				color.setColorid(rs.getString("colorid"));
-				color.setColorname(rs.getString("colorname"));
-				colorList.add(color);
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	return colorList;
-	}
-
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    return colorList;
+    }
 }

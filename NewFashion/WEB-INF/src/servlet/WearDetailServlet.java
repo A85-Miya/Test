@@ -34,80 +34,79 @@ import manage.WearDAO;
 
 public class WearDetailServlet extends HttpServlet {
 
-	//書籍詳細機能
-	public void doGet(HttpServletRequest request ,HttpServletResponse response)
-			throws ServletException ,IOException{
+    //書籍詳細機能
+    public void doGet(HttpServletRequest request ,HttpServletResponse response)
+            throws ServletException ,IOException{
 
-		String error = "";
-		String cmd = "";
+        String error = "";
+        String cmd = "";
 
-		try {
-			WearDAO objDao = new WearDAO();
+        try {
+            WearDAO objDao = new WearDAO();
 
-			request.setCharacterEncoding("UTF-8");
+            request.setCharacterEncoding("UTF-8");
 
-			cmd = request.getParameter("cmd");
-			String id = request.getParameter("id");
+            cmd = request.getParameter("cmd");
+            String id = request.getParameter("id");
 
-			if (cmd == null) {
-				cmd= "";
-			}
+            if (cmd == null) {
+                cmd= "";
+            }
 
-			Wear wear = objDao.selectByid(id);
+            Wear wear = objDao.selectByid(id);
 
-			//対象が存在しない場合→エラー画面へ
-			if (wear.getId() == null) {
-				error = "対象が存在しない為、処理できませんでした。";
-			}
+            //対象が存在しない場合→エラー画面へ
+            if (wear.getId() == null) {
+                error = "対象が存在しない為、処理できませんでした。";
+            }
 
-			//DAOクラスのオブジェクトを生成
-			BrandDAO objBrand = new BrandDAO();
-			CatedetailDAO objCate = new CatedetailDAO();
-			CategoryDAO objCategory = new CategoryDAO();
-			CatemenuDAO objDaomenu = new CatemenuDAO();
-			ColorDAO objColor = new ColorDAO();
-			SizeDAO objSize = new SizeDAO();
-			//selectAllでデータ取得
-			ArrayList<Brand> brandList = objBrand.selectAll();
-			ArrayList<Catedetail> catedetailList = objCate.selectAll();
-			ArrayList<Category> categoryList = objCategory.selectAll();
-			ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
-			ArrayList<Color> colorList = objColor.selectAll();
-			ArrayList<Size> sizeList = objSize.selectAll();
-			//requestに登録
-			request.setAttribute("brand_list", brandList);
-			request.setAttribute("catedetail_list", catedetailList);
-			request.setAttribute("category_list", categoryList);
-			request.setAttribute("catemenu_list", catemenuList);
-			request.setAttribute("color_list", colorList);
-			request.setAttribute("size_list", sizeList);
-			request.setAttribute("wear", wear);
+            //DAOクラスのオブジェクトを生成
+            BrandDAO objBrand = new BrandDAO();
+            CatedetailDAO objCate = new CatedetailDAO();
+            CategoryDAO objCategory = new CategoryDAO();
+            CatemenuDAO objDaomenu = new CatemenuDAO();
+            ColorDAO objColor = new ColorDAO();
+            SizeDAO objSize = new SizeDAO();
+            //selectAllでデータ取得
+            ArrayList<Brand> brandList = objBrand.selectAll();
+            ArrayList<Catedetail> catedetailList = objCate.selectAll();
+            ArrayList<Category> categoryList = objCategory.selectAll();
+            ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
+            ArrayList<Color> colorList = objColor.selectAll();
+            ArrayList<Size> sizeList = objSize.selectAll();
+            //requestに登録
+            request.setAttribute("brand_list", brandList);
+            request.setAttribute("catedetail_list", catedetailList);
+            request.setAttribute("category_list", categoryList);
+            request.setAttribute("catemenu_list", catemenuList);
+            request.setAttribute("color_list", colorList);
+            request.setAttribute("size_list", sizeList);
+            request.setAttribute("wear", wear);
 
 
-		} catch (IllegalStateException e) {
-			error = "DB接続エラーの為、更新処理は行えませんでした。";
+        } catch (IllegalStateException e) {
+            error = "DB接続エラーの為、更新処理は行えませんでした。";
 
-		} finally {
-			request.setAttribute("error", error);
-			request.setAttribute("cmd", cmd);
+        } finally {
+            request.setAttribute("error", error);
+            request.setAttribute("cmd", cmd);
 
-			if (error.equals("")) {
+            if (error.equals("")) {
 
-				if (cmd.equals("update")) {
-					request.getRequestDispatcher("/view/wearUpdate.jsp").forward(request, response);
+                if (cmd.equals("update")) {
+                    request.getRequestDispatcher("/view/wearUpdate.jsp").forward(request, response);
 
-				} else if (cmd.equals("delete")) {
-					request.getRequestDispatcher("/view/wearDelete.jsp").forward(request, response);
+                } else if (cmd.equals("delete")) {
+                    request.getRequestDispatcher("/view/wearDelete.jsp").forward(request, response);
 
-				} else {
-					request.getRequestDispatcher("/view/weardetail.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/view/weardetail.jsp").forward(request, response);
 
-				}
+                }
 
-			} else {
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-			}
-
-		}
-	}
+            } else {
+                request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+            }
+        }
+    }
 }

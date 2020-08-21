@@ -9,167 +9,155 @@ import java.util.ArrayList;
 
 public class CatedetailDAO {
 
-	private static String RDB_DRIVE ="com.mysql.cj.jdbc.Driver";
-	private static String URL ="jdbc:mysql://localhost:3306/fashiondb?serverTimezone=JST";
-	private static String USER ="item";
-	private static String PASS ="item123";
+    private static String RDB_DRIVE ="com.mysql.cj.jdbc.Driver";
+    private static String URL ="jdbc:mysql://localhost:3306/fashiondb?serverTimezone=JST";
+    private static String USER ="item";
+    private static String PASS ="item123";
 
-	private static Connection getConnection() {
-		Connection con = null;
+    private static Connection getConnection() {
+        Connection con = null;
+        try {
+            Class.forName(RDB_DRIVE);
+            con = DriverManager.getConnection(URL, USER, PASS);
+            return con;
 
-		try {
-			Class.forName(RDB_DRIVE);
-			con = DriverManager.getConnection(URL, USER, PASS);
-			return con;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
-	}
+    public void insert(Catedetail catedetail) {
 
+        Connection con = null;
+        Statement smt = null;
 
+        try {
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
-	public void insert(Catedetail catedetail) {
+            //SQL文を文字列として定義
+            String sql = "INSERT INTO catedetailinfo(catedetailid,catedetailname) "
+                    + "VALUES('"+ catedetail.getCatedetailid() +"','"+ catedetail.getCatedetailname() +"')";
+            int count = smt.executeUpdate(sql);
 
-		Connection con = null;
-		Statement smt = null;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    }
 
-		try {
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
+    public void update(Catedetail catedetail) {
 
-			//SQL文を文字列として定義
-			String sql = "INSERT INTO catedetailinfo(catedetailid,catedetailname) "
-					+ "VALUES('"+ catedetail.getCatedetailid() +"','"+ catedetail.getCatedetailname() +"')";
+        Connection con = null;
+        Statement smt = null;
 
-			int count = smt.executeUpdate(sql);
+        try {
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
+            //SQL文を文字列として定義
+            String sql = "UPDATE catedetailinfo SET catedetailname='"+ catedetail.getCatedetailname()
+                +"' WHERE catedetailid='"+ catedetail.getCatedetailid() +"'";
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	}
+            int count = smt.executeUpdate(sql);
 
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    }
 
+    public Catedetail selectByCatedetailid(String catedetailid){
 
-	public void update(Catedetail catedetail) {
+        Connection con = null;
+        Statement smt = null;
 
-		Connection con = null;
-		Statement smt = null;
+        //Bookオブジェクトを生成
+        Catedetail catedetail = new Catedetail();
 
-		try {
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
+        try {
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
-			//SQL文を文字列として定義
-			String sql = "UPDATE catedetailinfo SET catedetailname='"+ catedetail.getCatedetailname()
-				+"' WHERE catedetailid='"+ catedetail.getCatedetailid() +"'";
+            //SQL文を文字列として定義
+            String sql = "SELECT * FROM catedetailinfo WHERE catedetailid= '" + catedetailid + "'";
 
-			int count = smt.executeUpdate(sql);
+            //executeQuery()メソッドを利用し、結果セットを取得
+            ResultSet rs = smt.executeQuery(sql);
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	}
+            //catedetailオブジェクトに格納
+            while (rs.next()) {
+                catedetail.setCatedetailid(rs.getString("catedetailid"));
+                catedetail.setCatedetailname(rs.getString("catedetailname"));
+            }
 
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+        return catedetail;
+    }
 
+    public ArrayList<Catedetail> selectAll() {
 
-	public Catedetail selectByCatedetailid(String catedetailid){
+        Connection con = null;
+        Statement smt = null;
 
-		Connection con = null;
-		Statement smt = null;
+        ArrayList<Catedetail> catedetailList = new ArrayList<Catedetail>();
 
-		//Bookオブジェクトを生成
-		Catedetail catedetail = new Catedetail();
+        String sql = "SELECT * FROM catedetailinfo";
 
-		try {
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
+        try{
+            //Connectionオブジェクトを生成
+            con = getConnection();
+            //Statementオブジェクトを生成
+            smt = con.createStatement();
+            //resultセットを取得
+            ResultSet rs = smt.executeQuery(sql);
 
-			//SQL文を文字列として定義
-			String sql = "SELECT * FROM catedetailinfo WHERE catedetailid= '" + catedetailid + "'";
+            /*
+             * 結果セットからデータを検索件数分全て取り出し、
+             * AllayListオブジェクトにBookオブジェクトとして格納
+             */
+            while (rs.next()) {
+                Catedetail catedetail = new Catedetail();
+                catedetail.setCatedetailid(rs.getString("catedetailid"));
+                catedetail.setCatedetailname(rs.getString("catedetailname"));
+                catedetailList.add(catedetail);
+            }
 
-			//executeQuery()メソッドを利用し、結果セットを取得
-			ResultSet rs = smt.executeQuery(sql);
-
-			//catedetailオブジェクトに格納
-			while (rs.next()) {
-				catedetail.setCatedetailid(rs.getString("catedetailid"));
-				catedetail.setCatedetailname(rs.getString("catedetailname"));
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-		return catedetail;
-	}
-
-
-
-	public ArrayList<Catedetail> selectAll() {
-
-		Connection con = null;
-		Statement smt = null;
-
-		ArrayList<Catedetail> catedetailList = new ArrayList<Catedetail>();
-
-		String sql = "SELECT * FROM catedetailinfo";
-
-		try{
-			//Connectionオブジェクトを生成
-			con = getConnection();
-			//Statementオブジェクトを生成
-			smt = con.createStatement();
-			//resultセットを取得
-			ResultSet rs = smt.executeQuery(sql);
-
-			/*
-			 * 結果セットからデータを検索件数分全て取り出し、
-			 * AllayListオブジェクトにBookオブジェクトとして格納
-			 */
-			while (rs.next()) {
-				Catedetail catedetail = new Catedetail();
-				catedetail.setCatedetailid(rs.getString("catedetailid"));
-				catedetail.setCatedetailname(rs.getString("catedetailname"));
-				catedetailList.add(catedetail);
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			//リソースの開放
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	return catedetailList;
-	}
-
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            //リソースの開放
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    return catedetailList;
+    }
 }

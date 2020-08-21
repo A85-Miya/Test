@@ -9,252 +9,245 @@ import java.util.ArrayList;
 
 public class CustomerDAO {
 
-	private static String RDB_DRIVE ="com.mysql.cj.jdbc.Driver";
-	private static String URL ="jdbc:mysql://localhost:3306/fashiondb?serverTimezone=JST";
-	private static String USER ="item";
-	private static String PASS ="item123";
+    private static String RDB_DRIVE ="com.mysql.cj.jdbc.Driver";
+    private static String URL ="jdbc:mysql://localhost:3306/fashiondb?serverTimezone=JST";
+    private static String USER ="item";
+    private static String PASS ="item123";
 
-	private static Connection getConnection() {
-		Connection con = null;
+    private static Connection getConnection() {
+        Connection con = null;
 
-		try {
-			Class.forName(RDB_DRIVE);
-			con = DriverManager.getConnection(URL, USER, PASS);
-			return con;
+        try {
+            Class.forName(RDB_DRIVE);
+            con = DriverManager.getConnection(URL, USER, PASS);
+            return con;
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
-	}
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
+    public void insert(Customer customer) {
 
+        Connection con = null;
+        Statement smt = null;
 
-	public void insert(Customer customer) {
+        try {
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
-		Connection con = null;
-		Statement smt = null;
+            //SQL文を文字列として定義
+            String sql = "INSERT INTO customerinfo(customerid,customername,customerkana,customergender,customerbirth,tel,email,customerpass) "
+                    + "VALUES('"+customer.getCustomerid()+"','"+customer.getCustomername()+"','"+customer.getCustomerkana()
+                    +"','"+customer.getCustomergender()+"','"+customer.getCustomerbirth()+"','"+customer.getTel()
+                    +"','"+customer.getEmail()+"','"+customer.getCustomerpass()+"')";
 
-		try {
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
-
-			//SQL文を文字列として定義
-			String sql = "INSERT INTO customerinfo(customerid,customername,customerkana,customergender,customerbirth,tel,email,customerpass) "
-					+ "VALUES('"+customer.getCustomerid()+"','"+customer.getCustomername()+"','"+customer.getCustomerkana()
-					+"','"+customer.getCustomergender()+"','"+customer.getCustomerbirth()+"','"+customer.getTel()
-					+"','"+customer.getEmail()+"','"+customer.getCustomerpass()+"')";
-
-			int count = smt.executeUpdate(sql);
+            int count = smt.executeUpdate(sql);
 
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	}
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    }
 
+    public Customer selectByCustomerid(String customerid){
 
+        Connection con = null;
+        Statement smt = null;
 
-	public Customer selectByCustomerid(String customerid){
+        //Bookオブジェクトを生成
+        Customer customer = new Customer();
 
-		Connection con = null;
-		Statement smt = null;
+        try {
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
-		//Bookオブジェクトを生成
-		Customer customer = new Customer();
+            //SQL文を文字列として定義
+            String sql = "SELECT * FROM customerinfo WHERE customerid= '" + customerid + "'";
 
-		try {
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
+            //executeQuery()メソッドを利用し、結果セットを取得
+            ResultSet rs = smt.executeQuery(sql);
 
-			//SQL文を文字列として定義
-			String sql = "SELECT * FROM customerinfo WHERE customerid= '" + customerid + "'";
+            //customerオブジェクトに格納
+            while (rs.next()) {
+                customer.setCustomerid(rs.getString("customerid"));
+                customer.setCustomername(rs.getString("customername"));
+                customer.setCustomerkana(rs.getString("customerkana"));
+                customer.setCustomergender(rs.getString("customergender"));
+                customer.setCustomerbirth(rs.getString("customerbirth"));
+                customer.setTel(rs.getString("tel"));
+                customer.setEmail(rs.getString("email"));
+                customer.setCustomerpass(rs.getString("customerpass"));
+            }
 
-			//executeQuery()メソッドを利用し、結果セットを取得
-			ResultSet rs = smt.executeQuery(sql);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+        return customer;
+    }
 
-			//customerオブジェクトに格納
-			while (rs.next()) {
-				customer.setCustomerid(rs.getString("customerid"));
-				customer.setCustomername(rs.getString("customername"));
-				customer.setCustomerkana(rs.getString("customerkana"));
-				customer.setCustomergender(rs.getString("customergender"));
-				customer.setCustomerbirth(rs.getString("customerbirth"));
-				customer.setTel(rs.getString("tel"));
-				customer.setEmail(rs.getString("email"));
-				customer.setCustomerpass(rs.getString("customerpass"));
-			}
+    public ArrayList<Customer> selectAll() {
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-		return customer;
-	}
+        Connection con = null;
+        Statement smt = null;
 
+        ArrayList<Customer> customerList = new ArrayList<Customer>();
 
+        String sql = "SELECT * FROM customerinfo";
 
-	public ArrayList<Customer> selectAll() {
+        try{
+            //Connectionオブジェクトを生成
+            con = getConnection();
+            //Statementオブジェクトを生成
+            smt = con.createStatement();
+            //resultセットを取得
+            ResultSet rs = smt.executeQuery(sql);
 
-		Connection con = null;
-		Statement smt = null;
+            /*
+             * 結果セットからデータを検索件数分全て取り出し、
+             * AllayListオブジェクトにcustomerオブジェクトとして格納
+             */
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerid(rs.getString("customerid"));
+                customer.setCustomername(rs.getString("customername"));
+                customer.setCustomerkana(rs.getString("customerkana"));
+                customer.setCustomergender(rs.getString("customergender"));
+                customer.setCustomerbirth(rs.getString("customerbirth"));
+                customer.setTel(rs.getString("tel"));
+                customer.setEmail(rs.getString("email"));
+                customer.setCustomerpass(rs.getString("customerpass"));
+                customerList.add(customer);
+            }
 
-		ArrayList<Customer> customerList = new ArrayList<Customer>();
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    return customerList;
+    }
 
-		String sql = "SELECT * FROM customerinfo";
+    public void delete(String customerid) {
 
-		try{
-			//Connectionオブジェクトを生成
-			con = getConnection();
-			//Statementオブジェクトを生成
-			smt = con.createStatement();
-			//resultセットを取得
-			ResultSet rs = smt.executeQuery(sql);
+        Connection con = null;
+        Statement smt = null;
 
-			/*
-			 * 結果セットからデータを検索件数分全て取り出し、
-			 * AllayListオブジェクトにcustomerオブジェクトとして格納
-			 */
-			while (rs.next()) {
-				Customer customer = new Customer();
-				customer.setCustomerid(rs.getString("customerid"));
-				customer.setCustomername(rs.getString("customername"));
-				customer.setCustomerkana(rs.getString("customerkana"));
-				customer.setCustomergender(rs.getString("customergender"));
-				customer.setCustomerbirth(rs.getString("customerbirth"));
-				customer.setTel(rs.getString("tel"));
-				customer.setEmail(rs.getString("email"));
-				customer.setCustomerpass(rs.getString("customerpass"));
-				customerList.add(customer);
-			}
+        try {
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	return customerList;
-	}
+            //SQL文を文字列として定義
+            String sql = "DELETE FROM customerinfo WHERE customerid ='" + customerid + "'";
 
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
-	public void delete(String customerid) {
+            int count = smt.executeUpdate(sql);
 
-		Connection con = null;
-		Statement smt = null;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    }
 
-		try {
+    public void update(Customer customer) {
 
-			//SQL文を文字列として定義
-			String sql = "DELETE FROM customerinfo WHERE customerid ='" + customerid + "'";
+        Connection con = null;
+        Statement smt = null;
 
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
+        try {
+            //SQL文を文字列として定義
+            String sql = "UPDATE customerinfo SET customername='"+customer.getCustomername()+"',customerkana='"+customer.getCustomerkana()+"',"
+                    + "customergender='"+customer.getCustomergender()+"',customerbirth='"+customer.getCustomerbirth()+"',"
+                    + "tel='"+customer.getTel()+"',email='"+customer.getEmail()+"',customerpass='"+customer.getCustomerpass()+"'"
+                    + " WHERE customerid='"+customer.getCustomerid()+"'";
 
-			int count = smt.executeUpdate(sql);
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	}
+            int count = smt.executeUpdate(sql);
 
-	public void update(Customer customer) {
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+    }
 
-		Connection con = null;
-		Statement smt = null;
+    public Customer selectByCustomer(String email, String customerpass){
 
-		try {
-			//SQL文を文字列として定義
-			String sql = "UPDATE customerinfo SET customername='"+customer.getCustomername()+"',customerkana='"+customer.getCustomerkana()+"',"
-					+ "customergender='"+customer.getCustomergender()+"',customerbirth='"+customer.getCustomerbirth()+"',"
-					+ "tel='"+customer.getTel()+"',email='"+customer.getEmail()+"',customerpass='"+customer.getCustomerpass()+"'"
-					+ " WHERE customerid='"+customer.getCustomerid()+"'";
+        Connection con = null;
+        Statement smt = null;
 
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
+        //customerオブジェクトを生成
+        Customer customer = new Customer();
 
-			int count = smt.executeUpdate(sql);
+        try {
+            //Connectionオブジェクト・Statementオブジェクトを生成
+            con = getConnection();
+            smt = con.createStatement();
 
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-	}
+            //SQL文を文字列として定義
+            String sql = "SELECT * FROM customerinfo WHERE customerpass= '" + customerpass + "' AND email='"+ email +"'";
 
-	public Customer selectByCustomer(String email, String customerpass){
+            //executeQuery()メソッドを利用し、結果セットを取得
+            ResultSet rs = smt.executeQuery(sql);
 
-		Connection con = null;
-		Statement smt = null;
+            //customerオブジェクトに格納
+            while (rs.next()) {
+                customer.setCustomerid(rs.getString("customerid"));
+                customer.setCustomername(rs.getString("customername"));
+                customer.setCustomerkana(rs.getString("customerkana"));
+                customer.setCustomergender(rs.getString("customergender"));
+                customer.setCustomerbirth(rs.getString("customerbirth"));
+                customer.setTel(rs.getString("tel"));
+                customer.setEmail(rs.getString("email"));
+                customer.setCustomerpass(rs.getString("customerpass"));
+            }
 
-		//customerオブジェクトを生成
-		Customer customer = new Customer();
-
-		try {
-			//Connectionオブジェクト・Statementオブジェクトを生成
-			con = getConnection();
-			smt = con.createStatement();
-
-			//SQL文を文字列として定義
-			String sql = "SELECT * FROM customerinfo WHERE customerpass= '" + customerpass + "' AND email='"+ email +"'";
-
-			//executeQuery()メソッドを利用し、結果セットを取得
-			ResultSet rs = smt.executeQuery(sql);
-
-			//customerオブジェクトに格納
-			while (rs.next()) {
-				customer.setCustomerid(rs.getString("customerid"));
-				customer.setCustomername(rs.getString("customername"));
-				customer.setCustomerkana(rs.getString("customerkana"));
-				customer.setCustomergender(rs.getString("customergender"));
-				customer.setCustomerbirth(rs.getString("customerbirth"));
-				customer.setTel(rs.getString("tel"));
-				customer.setEmail(rs.getString("email"));
-				customer.setCustomerpass(rs.getString("customerpass"));
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if ( smt != null ) {
-				try { smt.close(); } catch (SQLException ignore) { }
-			}
-			if ( con != null ) {
-				try { con.close(); } catch (SQLException ignore) { }
-			}
-		}
-		return customer;
-	}
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if ( smt != null ) {
+                try { smt.close(); } catch (SQLException ignore) { }
+            }
+            if ( con != null ) {
+                try { con.close(); } catch (SQLException ignore) { }
+            }
+        }
+        return customer;
+    }
 }
