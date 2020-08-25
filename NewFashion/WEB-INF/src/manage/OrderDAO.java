@@ -40,8 +40,8 @@ public class OrderDAO {
 			smt = con.createStatement();
 
 			//SQL文を文字列として定義
-			String sql = "INSERT INTO orderinfo(orderid,id,customerid,quantity,date) "
-					+ "VALUES('"+order.getOrderid()+"','"+order.getId()+"','"+order.getCustomerid()
+			String sql = "INSERT INTO orderinfo(id,customerid,quantity,date) "
+					+ "VALUES('"+order.getId()+"','"+order.getCustomerid()
 					+"','"+order.getQuantity()+"','"+order.getDate()+"')";
 
 			int count = smt.executeUpdate(sql);

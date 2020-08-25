@@ -69,16 +69,32 @@ public class WearDAO {
 
 		Connection con = null;
 		Statement smt = null;
+		String sql = "";
 
 		try {
 			//Connectionオブジェクト・Statementオブジェクトを生成
 			con = getConnection();
 			smt = con.createStatement();
 
+			String tagone = wear.getTagone();
+			String tagtwo = wear.getTagtwo();
+			String tagthree = wear.getTagthree();
+
 			//SQL文を文字列として定義
-			String sql = "UPDATE JANlist SET tagone='"+ wear.getTagone()
-					+"' tagtwo='"+ wear.getTagtwo() +"' tagthree='"+ wear.getTagthree()
-					+"' WHERE id='"+ wear.getId() +"'";
+			if (tagthree.isEmpty() && tagtwo.isEmpty()) {
+				sql = "UPDATE JANlist SET tagone='"+ tagone
+						+"' WHERE id='"+ wear.getId() +"'";
+
+			} else if (tagthree.isEmpty()) {
+				sql = "UPDATE JANlist SET tagone='"+ tagone
+						+"' tagtwo='"+ tagtwo +"' WHERE id='"+ wear.getId() +"'";
+
+			} else {
+				sql = "UPDATE JANlist SET tagone='"+ tagone
+						+"' tagtwo='"+ tagtwo +"' tagthree='"+ tagthree
+						+"' WHERE id='"+ wear.getId() +"'";
+
+			}
 
 			int count = smt.executeUpdate(sql);
 
@@ -141,7 +157,7 @@ public class WearDAO {
 			//SQL文を文字列として定義
 			String sql = "UPDATE JANlist SET name='"+ wear.getName() +"' intax='"+ wear.getIntax()
 					+"' outtax='"+ wear.getOuttax() +"' purchase='"+ wear.getPurchase() +"' "
-					+ "WHERE id='"+ wear.getId() +"'";
+					+ "comment='"+ wear.getComment() +"' WHERE id='"+ wear.getId() +"'";
 
 			int count = smt.executeUpdate(sql);
 
