@@ -91,6 +91,36 @@ public class OrderDAO {
 
 
 
+	public void delete(String orderid) {
+
+		Connection con = null;
+		Statement smt = null;
+
+		try {
+
+			//SQL文を文字列として定義
+			String sql = "DELETE FROM orderinfo WHERE orderid ='" + orderid + "'";
+
+			//Connectionオブジェクト・Statementオブジェクトを生成
+			con = getConnection();
+			smt = con.createStatement();
+
+			//書籍データを削除
+			int count = smt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if ( smt != null ) {
+				try { smt.close(); } catch (SQLException ignore) { }
+			}
+			if ( con != null ) {
+				try { con.close(); } catch (SQLException ignore) { }
+			}
+		}
+	}
+
+
 	public Order selectByOrderid(String orderid){
 
 		Connection con = null;
@@ -130,6 +160,50 @@ public class OrderDAO {
 			}
 		}
 		return order;
+	}
+
+
+	public ArrayList<Order> selectByCustomerid(String customerid){
+
+		Connection con = null;
+		Statement smt = null;
+
+		//Orderオブジェクトを生成
+		ArrayList<Order> orderList = new ArrayList<Order>();
+
+		try {
+			//Connectionオブジェクト・Statementオブジェクトを生成
+			con = getConnection();
+			smt = con.createStatement();
+
+			//SQL文を文字列として定義
+			String sql = "SELECT * FROM orderinfo WHERE orderid= '" + customerid + "'";
+
+			//executeQuery()メソッドを利用し、結果セットを取得
+			ResultSet rs = smt.executeQuery(sql);
+
+			//Orderオブジェクトに格納
+			while (rs.next()) {
+				Order order = new Order();
+				order.setOrderid(rs.getString("orderid"));
+				order.setId(rs.getString("id"));
+				order.setCustomerid(rs.getString("customerid"));
+				order.setQuantity(rs.getInt("quantity"));
+				order.setDate(rs.getString("date"));
+				orderList.add(order);
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if ( smt != null ) {
+				try { smt.close(); } catch (SQLException ignore) { }
+			}
+			if ( con != null ) {
+				try { con.close(); } catch (SQLException ignore) { }
+			}
+		}
+		return orderList;
 	}
 
 

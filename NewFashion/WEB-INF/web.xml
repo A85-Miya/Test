@@ -97,4 +97,14 @@
 		<url-pattern>/LoginStaff</url-pattern>
 	</servlet-mapping>
 
+
+	<servlet>
+		<servlet-name>OrderDetailServletMapping</servlet-name>
+		<servlet-class>servlet.OrderDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderDetailServletMapping</servlet-name>
+		<url-pattern>/OrderDetail</url-pattern>
+	</servlet-mapping>
+
 </web-app>
