@@ -20,7 +20,7 @@ Staff staff = (Staff)request.getAttribute("staff");
 		}
 		.box-above2{
 			width:100%;
-			height:50px;
+			height:150px;
 			text-align:center;
 			background-color:#FFFFFF;
 		}

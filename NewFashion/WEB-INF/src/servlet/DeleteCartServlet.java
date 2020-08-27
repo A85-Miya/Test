@@ -20,6 +20,8 @@ import manage.CatemenuDAO;
 import manage.Color;
 import manage.ColorDAO;
 import manage.Customer;
+import manage.Order;
+import manage.OrderDAO;
 import manage.Size;
 import manage.SizeDAO;
 import manage.Wear;
@@ -69,7 +71,16 @@ public class DeleteCartServlet extends HttpServlet {
 			Customer customer = (Customer)session.getAttribute("customer");
 			String customerid = customer.getCustomerid();
 
+			String orderid = request.getParameter("orderid");
+			OrderDAO objorder = new OrderDAO();
+			Order order = objorder.selectByOrderid(orderid);
 
+			if (order.getDate().isEmpty()) {
+				error = "注文履歴が存在しない為、キャンセルできませんでした。";
+				return;
+			}
+
+			objorder.delete(orderid);
 
 		} catch (NumberFormatException nfe) {
 			error = "価格の値が不正の為、更新処理は行えませんでした。";

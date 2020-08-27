@@ -22,11 +22,13 @@ import manage.Order;
 import manage.OrderDAO;
 import manage.Size;
 import manage.SizeDAO;
+import manage.Wear;
+import manage.WearDAO;
 
 public class OrderDetailServlet extends HttpServlet {
 
 	//書籍詳細機能
-	public void doGet(HttpServletRequest request ,HttpServletResponse response)
+	public void doPost(HttpServletRequest request ,HttpServletResponse response)
 			throws ServletException ,IOException{
 
 		String error = "";
@@ -58,6 +60,7 @@ public class OrderDetailServlet extends HttpServlet {
 			CatemenuDAO objDaomenu = new CatemenuDAO();
 			ColorDAO objColor = new ColorDAO();
 			SizeDAO objSize = new SizeDAO();
+			WearDAO objwear = new WearDAO();
 			//selectAllでデータ取得
 			ArrayList<Brand> brandList = objBrand.selectAll();
 			ArrayList<Catedetail> catedetailList = objCate.selectAll();
@@ -65,6 +68,7 @@ public class OrderDetailServlet extends HttpServlet {
 			ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
 			ArrayList<Color> colorList = objColor.selectAll();
 			ArrayList<Size> sizeList = objSize.selectAll();
+			ArrayList<Wear> wearList = objwear.selectAll();
 			//requestに登録
 			request.setAttribute("brand_list", brandList);
 			request.setAttribute("catedetail_list", catedetailList);
@@ -72,6 +76,7 @@ public class OrderDetailServlet extends HttpServlet {
 			request.setAttribute("catemenu_list", catemenuList);
 			request.setAttribute("color_list", colorList);
 			request.setAttribute("size_list", sizeList);
+			request.setAttribute("wear_list", wearList);
 			request.setAttribute("order", order);
 
 
@@ -88,7 +93,7 @@ public class OrderDetailServlet extends HttpServlet {
 					request.getRequestDispatcher("/view/cartupdate.jsp").forward(request, response);
 
 				} else if (cmd.equals("delete")) {
-					request.getRequestDispatcher("/view/cartDelete.jsp").forward(request, response);
+					request.getRequestDispatcher("/view/cartdelete.jsp").forward(request, response);
 
 				} else {
 					request.getRequestDispatcher("/view/cartdetail.jsp").forward(request, response);

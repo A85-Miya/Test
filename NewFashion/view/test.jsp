@@ -21,7 +21,7 @@ ArrayList<Wear> wearList = (ArrayList<Wear>)request.getAttribute("wear_list");
 		}
 		.box-above2{
 			width:100%;
-			height:50px;
+			height:150px;
 			text-align:center;
 			background-color:#FFFFFF;
 		}

@@ -107,4 +107,13 @@
 		<url-pattern>/OrderDetail</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>ListCartServletMapping</servlet-name>
+		<servlet-class>servlet.ListCartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListCartServletMapping</servlet-name>
+		<url-pattern>/ListCart</url-pattern>
+	</servlet-mapping>
+
 </web-app>

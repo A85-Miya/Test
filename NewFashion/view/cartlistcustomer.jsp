@@ -79,19 +79,22 @@ ArrayList<Wear> wearList = (ArrayList<Wear>)request.getAttribute("wear_list");
 					for (int j = 0; j < wearList.size(); j++) {
 						if (wearList.get(j).getId().equals(orderList.get(i).getId())) {
 					%>
-				<th><%=wearList.get(j).getName() %></th>
+				<th><a href="<%=request.getContextPath() %>/OrderDetail?id=<%=wearList.get(j).getId() %>">
+						<%=wearList.get(j).getName() %></a></th>
 					<%
 						}
 					}
 					%>
 				<th><%=orderList.get(i).getDate() %></th>
 				<th><%=orderList.get(i).getQuantity() %></th>
-				<th><form action="<%=request.getContextPath() %>/OrderDetail?orderid=<%=orderList.get(i).getOrderid() %>">
+				<th><form action="<%=request.getContextPath() %>/OrderDetail">
 						<input type="submit" value="数量変更">
-						<input type="hidden" name="cmd" value="update"></form>
-					<form action="<%=request.getContextPath() %>/OrderDetail?orderid=<%=orderList.get(i).getOrderid() %>">
+						<input type="hidden" name="cmd" value="update">
+						<input type="hidden" name="orderid" value="<%=orderList.get(i).getOrderid() %>"></form>
+					<form action="<%=request.getContextPath() %>/OrderDetail">
 						<input type="submit" value="キャンセル">
-						<input type="hidden" name="cmd" value="delete"></form>
+						<input type="hidden" name="cmd" value="delete">
+						<input type="hidden" name="orderid" value="<%=orderList.get(i).getOrderid() %>"></form>
 				<%
 					}
 				%>

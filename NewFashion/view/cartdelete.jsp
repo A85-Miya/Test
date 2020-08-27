@@ -1,6 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<%@page import="java.util.ArrayList,manage.Wear" %>
+<%@page import="java.util.ArrayList,manage.Order,manage.Wear" %>
 <%
+Order order = (Order)request.getAttribute("order");
 ArrayList<Wear> wearList = (ArrayList<Wear>)request.getAttribute("wear_list");
 %>
 
@@ -61,30 +62,40 @@ ArrayList<Wear> wearList = (ArrayList<Wear>)request.getAttribute("wear_list");
 
 	<div class="box clearfix">
 		<div class="box-left float-left"><%@include file="leftmenu.jsp" %></div>
-
 		<div class="box-right float-left">
-
-		<table>
-		<tr>
-		<%
-		for (int i = 0; i < wearList.size(); i++) {
-		%>
-			<th><a href="<%=request.getContextPath() %>/WearDetail?id=<%=wearList.get(i).getId() %>">
-				<%=wearList.get(i).getName() %></a></th>
-
-			<th><img src="<%=wearList.get(i).getImage() %>" alt="<%=wearList.get(i).getName() %>" width="150" height="150"></th>
-
-			<th><a href="<%=request.getContextPath() %>/InsertCart?id=<%=wearList.get(i).getId() %>">
-				カートに入れる</a></th>
-
-		<%
-		}
-		%>
-		</tr>
-		</table>
-
+			<table style="margin:0 auto">
+			<form action="<%=request.getContextPath()%>/DeleteCart">
+			<tr>
+				<td>商品名</td>
+					<%
+					for (int i = 0; i < wearList.size(); i++) {
+						if (order.getId().equals(wearList.get(i).getId())) {
+					%>
+				<td><%=wearList.get(i).getName() %></td>
+					<%
+						}
+					}
+					%>
+			</tr>
+			<tr>
+				<td>注文日</td>
+				<td><%=order.getDate() %></td>
+			</tr>
+			<tr>
+				<td>数量</td>
+				<td><%=order.getQuantity() %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value ="キャンセル" >
+					<input type="hidden" name="orderid" value="<%=order.getOrderid() %>"></td>
+				<td></td>
+			</tr>
+			</form>
+			</table>
 		</div>
 	</div>
+
 	<div class="box-bottom"><%@include file="bottom.jsp" %></div>
 
 

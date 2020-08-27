@@ -20,7 +20,7 @@ Customer customer = (Customer)request.getAttribute("customer");
 		}
 		.box-above2{
 			width:100%;
-			height:50px;
+			height:150px;
 			text-align:center;
 			background-color:#FFFFFF;
 		}
@@ -61,8 +61,7 @@ Customer customer = (Customer)request.getAttribute("customer");
 
 		<div class="box-right float-left">
 		<h3>マイページ</h3>
-		<h4>カート</h4>
-		<h4>お客様情報</h4>
+		<h4><a href="<%=request.getContextPath() %>/ListCart">カート一覧</a></h4>
 
 		</div>
 	</div>
