@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,7 +25,7 @@ import manage.SizeDAO;
 import manage.Staff;
 import manage.StaffDAO;
 
-public class LoginStaffServlet {
+public class LoginStaffServlet extends HttpServlet{
 
 	/**
 	 * ログイン機能を実装するメソッド
@@ -32,7 +33,7 @@ public class LoginStaffServlet {
 	 * @param HttpServletRequestオブジェクト、HttpServletResponseオブジェクト
 	 * @return なし
 	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String message = "";
 		String error = "";

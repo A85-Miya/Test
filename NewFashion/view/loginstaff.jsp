@@ -1,4 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
+
 <%
 String message = (String)request.getAttribute("message");
 %>
@@ -59,10 +60,12 @@ String message = (String)request.getAttribute("message");
 		<br>
 
 		<%
-		if (!(message.equals(""))) {
+		if (message != null) {
+			if (message != "") {
 		%>
 		<h4 style="color:red"><%=message %></h4>
 		<%
+			}
 		}
 		%>
 

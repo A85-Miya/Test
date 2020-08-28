@@ -1,8 +1,4 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<%@page import="manage.Staff" %>
-<%
-Staff staff = (Staff)request.getAttribute("staff");
-%>
 
 <html>
 
@@ -54,9 +50,9 @@ Staff staff = (Staff)request.getAttribute("staff");
 
 	<div class="box"><%@include file="header.jsp" %></div>
 
-	<div class="box-above2"><h3><%=staff.getStaffname() %> スタッフページ</h3></div>
-
 	<div class="box">
+		<h3>スタッフページ</h3>
+		<a href="<%=request.getContextPath() %>/WearList">商品一覧</a>
 
 	</div>
 

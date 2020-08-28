@@ -116,4 +116,13 @@
 		<url-pattern>/ListCart</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>WearListServletMapping</servlet-name>
+		<servlet-class>servlet.WearListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearListServletMapping</servlet-name>
+		<url-pattern>/WearList</url-pattern>
+	</servlet-mapping>
+
 </web-app>
