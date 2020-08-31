@@ -29,7 +29,7 @@ public class WearInsertServlet extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 
 			//変数宣言
-			String JAN = request.getParameter("JAN");
+			String JANcode = request.getParameter("JAN");
 			String name = request.getParameter("name");
 			String strintax = request.getParameter("intax");
 			String strouttax = request.getParameter("outtax");
@@ -44,7 +44,7 @@ public class WearInsertServlet extends HttpServlet {
 			String comment = request.getParameter("comment");
 
 			//未入力→エラー画面へ
-			if (JAN.isEmpty()) {
+			if (JANcode.isEmpty()) {
 				error = "JANコードが未選択の為、登録処理は行えませんでした。";
 				return;
 			}
@@ -102,7 +102,7 @@ public class WearInsertServlet extends HttpServlet {
 			int outtax = Integer.parseInt(strouttax);
 			int purchase = Integer.parseInt(strpurchase);
 			int ordervalue = Integer.parseInt(strordervalue);
-			wear.setJancode(JAN);
+			wear.setJancode(JANcode);
 			wear.setName(name);
 			wear.setIntax(intax);
 			wear.setOuttax(outtax);

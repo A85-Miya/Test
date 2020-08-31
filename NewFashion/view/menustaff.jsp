@@ -52,7 +52,9 @@
 
 	<div class="box">
 		<h3>スタッフページ</h3>
-		<a href="<%=request.getContextPath() %>/WearList">商品一覧</a>
+		<a href="<%=request.getContextPath() %>/WearList">商品登録</a>
+		<br>
+		<a href="<%=request.getContextPath() %>/WearList?cmd=list">商品一覧</a>
 
 	</div>
 

@@ -1,26 +1,40 @@
 <web-app>
 
 	<servlet>
-		<servlet-name>GrandMenuServletMapping</servlet-name>
-		<servlet-class>servlet.GrandMenuServlet</servlet-class>
+		<servlet-name>BrandInsertServletMapping</servlet-name>
+		<servlet-class>servlet.BrandInsertServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GrandMenuServletMapping</servlet-name>
-		<url-pattern>/GrandMenu</url-pattern>
+		<servlet-name>BrandInsertServletMapping</servlet-name>
+		<url-pattern>/BrandInsert</url-pattern>
 	</servlet-mapping>
-
-
 
 	<servlet>
-		<servlet-name>TestServletMapping</servlet-name>
-		<servlet-class>servlet.TestServlet</servlet-class>
+		<servlet-name>BrandUpdateServletMapping</servlet-name>
+		<servlet-class>servlet.BrandUpdateServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>TestServletMapping</servlet-name>
-		<url-pattern>/Test</url-pattern>
+		<servlet-name>BrandUpdateServletMapping</servlet-name>
+		<url-pattern>/BrandUpdate</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>ColorInsertServletMapping</servlet-name>
+		<servlet-class>servlet.ColorInsertServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ColorInsertServletMapping</servlet-name>
+		<url-pattern>/ColorInsert</url-pattern>
+	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>DeleteCartServletMapping</servlet-name>
+		<servlet-class>servlet.DeleteCartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteCartServletMapping</servlet-name>
+		<url-pattern>/DeleteCart</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>FreeSearchServletMapping</servlet-name>
@@ -31,31 +45,14 @@
 		<url-pattern>/FreeSearch</url-pattern>
 	</servlet-mapping>
 
-
-
 	<servlet>
-		<servlet-name>WearSearchServletMapping</servlet-name>
-		<servlet-class>servlet.WearSearchServlet</servlet-class>
+		<servlet-name>GrandMenuServletMapping</servlet-name>
+		<servlet-class>servlet.GrandMenuServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>WearSearchServletMapping</servlet-name>
-		<url-pattern>/WearSearch</url-pattern>
+		<servlet-name>GrandMenuServletMapping</servlet-name>
+		<url-pattern>/GrandMenu</url-pattern>
 	</servlet-mapping>
-
-
-
-	<servlet>
-		<servlet-name>WearDetailServletMapping</servlet-name>
-		<servlet-class>servlet.WearDetailServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>WearDetailServletMapping</servlet-name>
-		<url-pattern>/WearDetail</url-pattern>
-	</servlet-mapping>
-
-
-
-
 
 	<servlet>
 		<servlet-name>InsertCartServletMapping</servlet-name>
@@ -66,8 +63,32 @@
 		<url-pattern>/InsertCart</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>JANInsertServletMapping</servlet-name>
+		<servlet-class>servlet.JANInsertServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JANInsertServletMapping</servlet-name>
+		<url-pattern>/JANInsert</url-pattern>
+	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>JANUpdateServletMapping</servlet-name>
+		<servlet-class>servlet.JANUpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JANUpdateServletMapping</servlet-name>
+		<url-pattern>/JANUpdate</url-pattern>
+	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>ListCartServletMapping</servlet-name>
+		<servlet-class>servlet.ListCartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListCartServletMapping</servlet-name>
+		<url-pattern>/ListCart</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>LoginCustomerServletMapping</servlet-name>
@@ -87,7 +108,6 @@
 		<url-pattern>/LoginCustomer</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>LoginStaffServletMapping</servlet-name>
 		<servlet-class>servlet.LoginStaffServlet</servlet-class>
@@ -96,7 +116,6 @@
 		<servlet-name>LoginStaffServletMapping</servlet-name>
 		<url-pattern>/LoginStaff</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>OrderDetailServletMapping</servlet-name>
@@ -108,12 +127,48 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>ListCartServletMapping</servlet-name>
-		<servlet-class>servlet.ListCartServlet</servlet-class>
+		<servlet-name>StaffInsertServletMapping</servlet-name>
+		<servlet-class>servlet.StaffInsertServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ListCartServletMapping</servlet-name>
-		<url-pattern>/ListCart</url-pattern>
+		<servlet-name>StaffInsertServletMapping</servlet-name>
+		<url-pattern>/StaffInsert</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TestServletMapping</servlet-name>
+		<servlet-class>servlet.TestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestServletMapping</servlet-name>
+		<url-pattern>/Test</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UpdateCartServletMapping</servlet-name>
+		<servlet-class>servlet.UpdateCartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateCartServletMapping</servlet-name>
+		<url-pattern>/UpdateCart</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>WearDetailServletMapping</servlet-name>
+		<servlet-class>servlet.WearDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearDetailServletMapping</servlet-name>
+		<url-pattern>/WearDetail</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>WearInsertServletMapping</servlet-name>
+		<servlet-class>servlet.WearInsertServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearInsertServletMapping</servlet-name>
+		<url-pattern>/WearInsert</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -123,6 +178,42 @@
 	<servlet-mapping>
 		<servlet-name>WearListServletMapping</servlet-name>
 		<url-pattern>/WearList</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>WearSaleServletMapping</servlet-name>
+		<servlet-class>servlet.WearSaleServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearSaleServletMapping</servlet-name>
+		<url-pattern>/WearSale</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>WearSearchServletMapping</servlet-name>
+		<servlet-class>servlet.WearSearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearSearchServletMapping</servlet-name>
+		<url-pattern>/WearSearch</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>WearTagServletMapping</servlet-name>
+		<servlet-class>servlet.WearTagServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearTagServletMapping</servlet-name>
+		<url-pattern>/WearTag</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>WearUpdateServletMapping</servlet-name>
+		<servlet-class>servlet.WearUpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearUpdateServletMapping</servlet-name>
+		<url-pattern>/WearUpdate</url-pattern>
 	</servlet-mapping>
 
 </web-app>

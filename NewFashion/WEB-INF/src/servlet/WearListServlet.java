@@ -18,6 +18,8 @@ import manage.Catemenu;
 import manage.CatemenuDAO;
 import manage.Color;
 import manage.ColorDAO;
+import manage.Ordercom;
+import manage.OrdercomDAO;
 import manage.Size;
 import manage.SizeDAO;
 import manage.Wear;
@@ -29,6 +31,7 @@ public class WearListServlet extends HttpServlet {
 			throws ServletException ,IOException{
 
 		String error = "";
+		String cmd = "";
 
 		//DAOクラスのオブジェクトを生成
 		BrandDAO objBrand = new BrandDAO();
@@ -36,6 +39,7 @@ public class WearListServlet extends HttpServlet {
 		CategoryDAO objDao = new CategoryDAO();
 		CatemenuDAO objDaomenu = new CatemenuDAO();
 		ColorDAO objColor = new ColorDAO();
+		OrdercomDAO objcom = new OrdercomDAO();
 		SizeDAO objSize = new SizeDAO();
 		WearDAO objWear = new WearDAO();
 
@@ -46,6 +50,7 @@ public class WearListServlet extends HttpServlet {
 			ArrayList<Category> categoryList = objDao.selectAll();
 			ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
 			ArrayList<Color> colorList = objColor.selectAll();
+			ArrayList<Ordercom> ordercomList = objcom.selectAll();
 			ArrayList<Size> sizeList = objSize.selectAll();
 			ArrayList<Wear> wearList = objWear.selectAll();
 			//requestに登録
@@ -54,8 +59,11 @@ public class WearListServlet extends HttpServlet {
 			request.setAttribute("category_list", categoryList);
 			request.setAttribute("catemenu_list", catemenuList);
 			request.setAttribute("color_list", colorList);
+			request.setAttribute("ordercom_list", ordercomList);
 			request.setAttribute("size_list", sizeList);
 			request.setAttribute("wear_list", wearList);
+
+			cmd = request.getParameter("cmd");
 
 
 		} catch (IllegalStateException e) {
@@ -63,9 +71,16 @@ public class WearListServlet extends HttpServlet {
 
 		} finally {
 			request.setAttribute("error", error);
+
 			if (error.equals("")) {
-				//grandmenu.jspへフォワード
-				request.getRequestDispatcher("/view/wearliststaff.jsp").forward(request, response);
+
+				if (cmd.equals("list")) {
+					request.getRequestDispatcher("/view/wearliststaff.jsp").forward(request, response);
+
+				} else {
+					request.getRequestDispatcher("/view/wearinsert.jsp").forward(request, response);
+				}
+
 			} else {
 				//error.jspへフォワード
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);

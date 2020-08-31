@@ -63,7 +63,34 @@ public class WearDAO {
 		}
 	}
 
+	public void delete(String id) {
 
+		Connection con = null;
+		Statement smt = null;
+
+		try {
+
+			//SQL文を文字列として定義
+			String sql = "DELETE FROM JANlist WHERE id ='" + id + "'";
+
+			//Connectionオブジェクト・Statementオブジェクトを生成
+			con = getConnection();
+			smt = con.createStatement();
+
+			//書籍データを削除
+			int count = smt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if ( smt != null ) {
+				try { smt.close(); } catch (SQLException ignore) { }
+			}
+			if ( con != null ) {
+				try { con.close(); } catch (SQLException ignore) { }
+			}
+		}
+	}
 
 	public void updateTAG(Wear wear) {
 
