@@ -177,13 +177,17 @@ ArrayList<Catedetail> catedetailList = (ArrayList<Catedetail>)request.getAttribu
 						}
 					}
 					%>
-				<th><input type="submit" value="情報更新">
+				<th>
+					<form action="<%=request.getContextPath() %>/WearDetail">
+					<input type="submit" value="情報更新">
 					<input type="hidden" name="cmd" value="update">
-					<input type="hidden" name="id" value="<%=wearList.get(i).getId() %>"></th>
+					<input type="hidden" name="id" value="<%=wearList.get(i).getId() %>"></th></form>
 
-				<th><input type="submit" value="商品削除">
+				<th>
+					<form action="<%=request.getContextPath() %>/WearDetail">
+					<input type="submit" value="商品削除">
 					<input type="hidden" name="cmd" value="delete">
-					<input type="hidden" name="id" value="<%=wearList.get(i).getId() %>"></th>
+					<input type="hidden" name="id" value="<%=wearList.get(i).getId() %>"></th></form>
 			</tr>
 			<%
 				}

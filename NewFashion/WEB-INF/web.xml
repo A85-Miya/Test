@@ -154,6 +154,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>WearDeleteServletMapping</servlet-name>
+		<servlet-class>servlet.WearDeleteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WearDeleteServletMapping</servlet-name>
+		<url-pattern>/WearDelete</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>WearDetailServletMapping</servlet-name>
 		<servlet-class>servlet.WearDetailServlet</servlet-class>
 	</servlet>

@@ -27,6 +27,8 @@ import manage.Catemenu;
 import manage.CatemenuDAO;
 import manage.Color;
 import manage.ColorDAO;
+import manage.Ordercom;
+import manage.OrdercomDAO;
 import manage.Size;
 import manage.SizeDAO;
 import manage.Wear;
@@ -40,6 +42,7 @@ public class WearDetailServlet extends HttpServlet {
 
 		String error = "";
 		String cmd = "";
+		String id = "";
 
 		try {
 			WearDAO objDao = new WearDAO();
@@ -47,7 +50,7 @@ public class WearDetailServlet extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 
 			cmd = request.getParameter("cmd");
-			String id = request.getParameter("id");
+			id = request.getParameter("id");
 
 			if (cmd == null) {
 				cmd= "";
@@ -67,6 +70,7 @@ public class WearDetailServlet extends HttpServlet {
 			CatemenuDAO objDaomenu = new CatemenuDAO();
 			ColorDAO objColor = new ColorDAO();
 			SizeDAO objSize = new SizeDAO();
+			OrdercomDAO objcom = new OrdercomDAO();
 			//selectAllでデータ取得
 			ArrayList<Brand> brandList = objBrand.selectAll();
 			ArrayList<Catedetail> catedetailList = objCate.selectAll();
@@ -74,6 +78,7 @@ public class WearDetailServlet extends HttpServlet {
 			ArrayList<Catemenu> catemenuList = objDaomenu.selectAll();
 			ArrayList<Color> colorList = objColor.selectAll();
 			ArrayList<Size> sizeList = objSize.selectAll();
+			ArrayList<Ordercom> ordercomList = objcom.selectAll();
 			//requestに登録
 			request.setAttribute("brand_list", brandList);
 			request.setAttribute("catedetail_list", catedetailList);
@@ -81,6 +86,7 @@ public class WearDetailServlet extends HttpServlet {
 			request.setAttribute("catemenu_list", catemenuList);
 			request.setAttribute("color_list", colorList);
 			request.setAttribute("size_list", sizeList);
+			request.setAttribute("ordercom_list", ordercomList);
 			request.setAttribute("wear", wear);
 
 
@@ -90,14 +96,15 @@ public class WearDetailServlet extends HttpServlet {
 		} finally {
 			request.setAttribute("error", error);
 			request.setAttribute("cmd", cmd);
+			request.setAttribute("id", id);
 
 			if (error.equals("")) {
 
 				if (cmd.equals("update")) {
-					request.getRequestDispatcher("/view/wearUpdate.jsp").forward(request, response);
+					request.getRequestDispatcher("/view/wearupdate.jsp").forward(request, response);
 
 				} else if (cmd.equals("delete")) {
-					request.getRequestDispatcher("/view/wearDelete.jsp").forward(request, response);
+					request.getRequestDispatcher("/view/weardelete.jsp").forward(request, response);
 
 				} else {
 					request.getRequestDispatcher("/view/weardetail.jsp").forward(request, response);

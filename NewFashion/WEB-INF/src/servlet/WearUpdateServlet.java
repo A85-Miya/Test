@@ -57,7 +57,7 @@ public class WearUpdateServlet extends HttpServlet {
 
 			//idが存在しない場合→エラー画面へ
 			Wear objwear = objDao.selectByid(id);
-			if (objwear.getId() != null) {
+			if (objwear.getId() == null) {
 				error = "該当商品がない為、処理は行えませんでした。";
 				return;
 			}
@@ -86,7 +86,7 @@ public class WearUpdateServlet extends HttpServlet {
 
 			if (error.equals("")) {
 				//「ListServlet」へフォワード
-				request.getRequestDispatcher("/view/complete.jsp").forward(request, response);
+				request.getRequestDispatcher("/view/menustaff.jsp").forward(request, response);
 
 			} else {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);

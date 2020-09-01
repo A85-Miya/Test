@@ -182,8 +182,8 @@ public class WearDAO {
 			smt = con.createStatement();
 
 			//SQL文を文字列として定義
-			String sql = "UPDATE JANlist SET name='"+ wear.getName() +"' intax='"+ wear.getIntax()
-					+"' outtax='"+ wear.getOuttax() +"' purchase='"+ wear.getPurchase() +"' "
+			String sql = "UPDATE JANlist SET name='"+ wear.getName() +"', intax='"+ wear.getIntax()
+					+"', outtax='"+ wear.getOuttax() +"', purchase='"+ wear.getPurchase() +"', "
 					+ "comment='"+ wear.getComment() +"' WHERE id='"+ wear.getId() +"'";
 
 			int count = smt.executeUpdate(sql);
